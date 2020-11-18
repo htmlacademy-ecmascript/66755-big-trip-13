@@ -37,9 +37,9 @@ const createPointTemplate = () => {
         </button>
       </div>
     </li>
-  `
+  `;
 };
 
 export {
   createPointTemplate
-}
+};

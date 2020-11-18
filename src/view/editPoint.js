@@ -160,9 +160,9 @@ const createEditPointTemplate = () => {
         </section>
       </form>
     </li>
-  `
+  `;
 };
 
 export {
   createEditPointTemplate
-}
+};
