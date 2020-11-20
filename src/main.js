@@ -33,7 +33,7 @@ render(tripInfoElement, createTripCostTemplate(), InsertPosition.AFTER_BEGIN);
 
 render(tripControlsElement, createMenuTemplate(), InsertPosition.AFTER_BEGIN);
 render(tripControlsElement, createFilterTemplate(), InsertPosition.BEFORE_END);
-render(tripEventsElement, createSortTemplate(), InsertPosition.AFTER_BEGIN);
+render(tripEventsElement, createSortTemplate(), InsertPosition.BEFORE_END);
 
 render(tripEventsElement, createListTemplate(), InsertPosition.BEFORE_END);
 
