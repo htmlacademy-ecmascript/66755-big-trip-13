@@ -6,10 +6,7 @@ import {createListTemplate} from "./view/list";
 import {createPointTemplate} from "./view/point";
 import {createEditPointTemplate} from "./view/editPoint";
 import {createTripCostTemplate} from "./view/tripCost";
-
-const render = (container, content, position) => {
-  container.insertAdjacentHTML(position, content);
-};
+import {render} from "./helpers/render";
 
 const InsertPosition = {
   BEFORE_BEGIN: `beforebegin`,
