@@ -1,31 +1,73 @@
-const createPointTemplate = () => {
+import {formatDate, getDateTimeFromDate, getDurationString} from "../utils/date";
+
+const createOfferTemplate = (offer) => {
+  const {name, price} = offer;
+
+  return `
+    <li class="event__offer">
+      <span class="event__offer-title">${name}</span>
+      &plus;&euro;&nbsp;
+      <span class="event__offer-price">${price}</span>
+    </li>
+  `;
+};
+
+const createOffersTemplate = (offers) => {
+  return `
+    <h4 class="visually-hidden">Offers:</h4>
+    <ul class="event__selected-offers">
+        ${offers.map((offer) => createOfferTemplate(offer)).join(``)}
+    </ul>
+  `;
+};
+
+const createEventTemplate = (icon) => {
+  return `
+    <div class="event__type">
+      <img class="event__type-icon" width="42" height="42" src="img/icons/${icon}.png" alt="Event type icon">
+    </div>
+  `;
+};
+
+const createPointTemplate = (point) => {
+  const {
+    pointType,
+    city,
+    offers,
+    totalPrice,
+    startDate,
+    endDate
+  } = point;
+
+  const shortMonthName = formatDate(startDate, `MMM`);
+  const startDay = formatDate(startDate, `D`);
+  const eventDuration = getDurationString(startDate, endDate) || `30M`;
+
   return `
     <li class="trip-events__item">
       <div class="event">
-        <time class="event__date" datetime="2019-03-18">MAR 18</time>
-        <div class="event__type">
-          <img class="event__type-icon" width="42" height="42" src="img/icons/taxi.png" alt="Event type icon">
-        </div>
-        <h3 class="event__title">Taxi Amsterdam</h3>
+        <time
+            class="event__date"
+            datetime="${getDateTimeFromDate(startDate)}"
+        >
+            ${shortMonthName.toUpperCase()} ${startDay}
+        </time>
+
+        ${createEventTemplate(pointType.toLowerCase())}
+
+        <h3 class="event__title">${pointType} ${city}</h3>
         <div class="event__schedule">
           <p class="event__time">
-            <time class="event__start-time" datetime="2019-03-18T10:30">10:30</time>
+            <time class="event__start-time" datetime="${getDateTimeFromDate(startDate)}">${formatDate(startDate, `HH:mm`)}</time>
             &mdash;
-            <time class="event__end-time" datetime="2019-03-18T11:00">11:00</time>
+            <time class="event__end-time" datetime="${getDateTimeFromDate(endDate)}">${formatDate(endDate, `HH:mm`)}</time>
           </p>
-          <p class="event__duration">30M</p>
+          <p class="event__duration">${eventDuration}</p>
         </div>
         <p class="event__price">
-          &euro;&nbsp;<span class="event__price-value">20</span>
+          &euro;&nbsp;<span class="event__price-value">${totalPrice}</span>
         </p>
-        <h4 class="visually-hidden">Offers:</h4>
-        <ul class="event__selected-offers">
-          <li class="event__offer">
-            <span class="event__offer-title">Order Uber</span>
-            &plus;&euro;&nbsp;
-            <span class="event__offer-price">20</span>
-          </li>
-        </ul>
+        ${createOffersTemplate(offers)}
         <button class="event__favorite-btn event__favorite-btn--active" type="button">
           <span class="visually-hidden">Add to favorite</span>
           <svg class="event__favorite-icon" width="28" height="28" viewBox="0 0 28 28">
