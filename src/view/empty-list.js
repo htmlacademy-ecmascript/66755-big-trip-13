@@ -1,6 +1,6 @@
 import {createElement} from "../helpers/create-element";
 
-const CreateEmptyListTemplate = () => {
+const createEmptyListTemplate = () => {
   return `
     <p class="trip-events__msg">
       Click New Event to create your first point
@@ -14,7 +14,7 @@ export default class EmptyList {
   }
 
   getTemplate() {
-    return CreateEmptyListTemplate();
+    return createEmptyListTemplate();
   }
 
   getElement() {
