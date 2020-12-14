@@ -2,7 +2,7 @@ import {createElement} from "../helpers/create-element";
 
 const CreateEmptyListTemplate = () => {
   return `
-    <p>
+    <p class="trip-events__msg">
       Click New Event to create your first point
     </p>
   `;

@@ -8,6 +8,10 @@ const joinPointsCities = (points) => {
 };
 
 const createTripInfoTemplate = (points) => {
+  if (!points.length) {
+    return ``;
+  }
+
   const cities = [];
 
   points.forEach((point) => {

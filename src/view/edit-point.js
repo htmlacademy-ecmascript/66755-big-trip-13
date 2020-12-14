@@ -74,7 +74,7 @@ const createEditPointTemplate = (point) => {
           <section class="event__details">
             ${availableOffers.length ? new AvailableOffersView(availableOffers, offers).getTemplate() : ``}
             ${destinationDescription ? new DestinationDetailsView(destinationDescription).getTemplate() : ``}
-            </section>
+          </section>
         ` : ``}
       </form>
     </li>

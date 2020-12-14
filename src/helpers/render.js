@@ -10,7 +10,6 @@ const renderTemplate = (container, content, position) => {
 };
 
 const render = (container, element, position) => {
-  debugger;
   switch (position) {
     case RenderPosition.AFTER_BEGIN:
       container.prepend(element);
