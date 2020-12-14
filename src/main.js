@@ -9,6 +9,7 @@ import TripCostView from "./view/trip-cost";
 import {render, RenderPosition} from "./helpers/render";
 import {createPoints} from "./mock/points";
 import EmptyListView from "./view/empty-list";
+import {isEscape} from "./utils/utils";
 
 const renderPoint = (pointListElement, point) => {
   const pointComponent = new PointView(point);
@@ -22,11 +23,20 @@ const renderPoint = (pointListElement, point) => {
     pointListElement.replaceChild(pointComponent.getElement(), pointEditComponent.getElement());
   };
 
+  const onEscapePressed = (event) => {
+    if (isEscape(event)) {
+      event.preventDefault();
+      replaceFormToCard();
+      document.removeEventListener(`keydown`, onEscapePressed);
+    }
+  };
+
   pointComponent
     .getElement()
     .querySelector(`.event__rollup-btn`)
     .addEventListener(`click`, () => {
       replaceCardToForm();
+      document.addEventListener(`keydown`, onEscapePressed);
     });
 
   pointEditComponent
