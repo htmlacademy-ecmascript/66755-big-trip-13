@@ -1,4 +1,5 @@
 import {formatDate, getDateTimeFromDate, getDurationString} from "../utils/date";
+import {createElement} from "../helpers/create-element";
 
 const createOfferTemplate = (offer) => {
   const {name, price} = offer;
@@ -82,6 +83,25 @@ const createPointTemplate = (point) => {
   `;
 };
 
-export {
-  createPointTemplate
-};
+export default class Point {
+  constructor(point) {
+    this._point = point;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createPointTemplate(this._point);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

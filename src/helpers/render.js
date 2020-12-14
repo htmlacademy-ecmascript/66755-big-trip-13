@@ -9,7 +9,8 @@ const renderTemplate = (container, content, position) => {
   container.insertAdjacentHTML(position, content);
 };
 
-const renderElement = (container, element, position) => {
+const render = (container, element, position) => {
+  debugger;
   switch (position) {
     case RenderPosition.AFTER_BEGIN:
       container.prepend(element);
@@ -22,6 +23,6 @@ const renderElement = (container, element, position) => {
 
 export {
   renderTemplate,
-  renderElement,
+  render,
   RenderPosition
 };

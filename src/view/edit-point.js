@@ -1,10 +1,11 @@
 import {formatDate} from "../utils/date";
 import {getRandomOffersByPointType} from "../mock/option";
 import {getDestinationDescription} from "../mock/destinationDescription";
-import {createAvailableOffersTemplate} from "./availableOffers";
-import {createDestinationDetailsTemplate} from "./destinationDetails";
-import {createEventTypeItems} from "./eventTypeItems";
-import {createCitiesDatalist} from "./citiesDatalist";
+import AvailableOffersView from "./availableOffers";
+import DestinationDetailsView from "./destination-details";
+import EventTypeItemsView from "./eventTypeItems";
+import CitiesDatalistView from "./citiesDatalist";
+import {createElement} from "../helpers/create-element";
 
 const createEditPointTemplate = (point) => {
   const {
@@ -34,7 +35,7 @@ const createEditPointTemplate = (point) => {
             <div class="event__type-list">
               <fieldset class="event__type-group">
                 <legend class="visually-hidden">Event type</legend>
-                ${createEventTypeItems(pointType)}
+                ${new EventTypeItemsView(pointType).getTemplate()}
               </fieldset>
             </div>
           </div>
@@ -44,7 +45,7 @@ const createEditPointTemplate = (point) => {
               ${pointType}
             </label>
             <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${city}" list="destination-list-1">
-            ${createCitiesDatalist()}
+            ${new CitiesDatalistView().getTemplate()}
           </div>
 
           <div class="event__field-group  event__field-group--time">
@@ -71,8 +72,8 @@ const createEditPointTemplate = (point) => {
         </header>
         ${availableOffers.length || destinationDescription ? `
           <section class="event__details">
-            ${availableOffers.length ? createAvailableOffersTemplate(availableOffers, offers) : ``}
-            ${destinationDescription ? createDestinationDetailsTemplate(destinationDescription) : ``}
+            ${availableOffers.length ? new AvailableOffersView(availableOffers, offers).getTemplate() : ``}
+            ${destinationDescription ? new DestinationDetailsView(destinationDescription).getTemplate() : ``}
             </section>
         ` : ``}
       </form>
@@ -80,6 +81,25 @@ const createEditPointTemplate = (point) => {
   `;
 };
 
-export {
-  createEditPointTemplate
-};
+export default class EditPoint {
+  constructor(point) {
+    this._point = point;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createEditPointTemplate(this._point);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

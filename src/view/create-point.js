@@ -1,13 +1,14 @@
+import dayjs from "dayjs";
 import {getRandomOffersByPointType} from "../mock/option";
 import {PointType} from "../mock/pointType";
-import {createEventTypeItems} from "./eventTypeItems";
-import {createCitiesDatalist} from "./citiesDatalist";
 import {CITIES} from "../mock/cities";
 import {getDestinationDescription} from "../mock/destinationDescription";
-import {createDestinationDetailsTemplate} from "./destinationDetails";
-import {createAvailableOffersTemplate} from "./availableOffers";
-import dayjs from "dayjs";
 import {formatDate} from "../utils/date";
+import {createElement} from "../helpers/create-element";
+import EventTypeItemsView from "./eventTypeItems";
+import CitiesDatalistView from "./citiesDatalist";
+import DestinationDetailsView from "./destination-details";
+import AvailableOffersView from "./availableOffers";
 
 const DEFAULT_POINT_TYPE = PointType.FLIGHT;
 const DEFAULT_CITY = CITIES[0];
@@ -44,7 +45,7 @@ const createAddNewPointTemplate = () => {
             <div class="event__type-list">
               <fieldset class="event__type-group">
                 <legend class="visually-hidden">Event type</legend>
-                ${createEventTypeItems(pointType)}
+                ${new EventTypeItemsView(pointType).getTemplate()}
               </fieldset>
             </div>
           </div>
@@ -54,7 +55,7 @@ const createAddNewPointTemplate = () => {
               ${pointType}
             </label>
             <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="${city}" list="destination-list-1">
-            ${createCitiesDatalist()}
+            ${new CitiesDatalistView().getTemplate()}
           </div>
 
           <div class="event__field-group  event__field-group--time">
@@ -78,8 +79,8 @@ const createAddNewPointTemplate = () => {
         </header>
         ${availableOffers.length || destinationDescription ? `
           <section class="event__details">
-            ${availableOffers.length ? createAvailableOffersTemplate(availableOffers, offers) : ``}
-            ${destinationDescription ? createDestinationDetailsTemplate(destinationDescription) : ``}
+            ${availableOffers.length ? new AvailableOffersView(availableOffers, offers).getTemplate() : ``}
+            ${destinationDescription ? new DestinationDetailsView(destinationDescription).getTemplate() : ``}
           </section>
         ` : ``}
       </form>
@@ -87,6 +88,24 @@ const createAddNewPointTemplate = () => {
   `;
 };
 
-export {
-  createAddNewPointTemplate
-};
+export default class CreatePoint {
+  constructor() {
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createAddNewPointTemplate();
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

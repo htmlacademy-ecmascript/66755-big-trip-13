@@ -1,3 +1,5 @@
+import {createElement} from "../helpers/create-element";
+
 const createAvailableOffersTemplate = (availableOffers, offers) => {
   return `
     <section class="event__section  event__section--offers">
@@ -27,6 +29,26 @@ const createAvailableOffersTemplate = (availableOffers, offers) => {
   `;
 };
 
-export {
-  createAvailableOffersTemplate
-};
+export default class AvailableOffers {
+  constructor(availableOffers, offers) {
+    this._availableOffers = availableOffers;
+    this._offers = offers;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createAvailableOffersTemplate(this._availableOffers, this._offers);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
