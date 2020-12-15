@@ -31,6 +31,11 @@ const renderPoint = (pointListElement, point) => {
     }
   };
 
+  pointEditComponent
+    .getElement()
+    .querySelector(`.event__rollup-btn`)
+    .addEventListener(`click`, () => replaceFormToCard());
+
   pointComponent
     .getElement()
     .querySelector(`.event__rollup-btn`)
