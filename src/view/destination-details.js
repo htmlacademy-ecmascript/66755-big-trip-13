@@ -1,3 +1,5 @@
+import {createElement} from "../helpers/create-element";
+
 const createDestinationDetailsTemplate = ({description, photos}) => {
   return `
     <section class="event__section  event__section--destination">
@@ -21,5 +23,25 @@ const createDestinationDetailsTemplate = ({description, photos}) => {
   `;
 };
 
-export {createDestinationDetailsTemplate};
+export default class DestinationDetails {
+  constructor(description) {
+    this._description = description;
+    this._element = null;
+  }
 
+  getTemplate() {
+    return createDestinationDetailsTemplate(this._description);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

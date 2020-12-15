@@ -1,3 +1,5 @@
+import {createElement} from "../helpers/create-element";
+
 const createFilterTemplate = () => {
   return `
     <h2 class="visually-hidden">Filter events</h2>
@@ -22,6 +24,24 @@ const createFilterTemplate = () => {
   `;
 };
 
-export {
-  createFilterTemplate
-};
+export default class Filter {
+  constructor() {
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilterTemplate();
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

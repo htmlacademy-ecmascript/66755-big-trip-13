@@ -1,21 +1,20 @@
-import {CITIES} from "../mock/cities";
 import {createElement} from "../helpers/create-element";
 
-const createCitiesDatalist = () => {
+const createEmptyListTemplate = () => {
   return `
-    <datalist id="destination-list-1">
-      ${CITIES.map((city) => `<option value="${city}"></option>`)}
-    </datalist>
+    <p class="trip-events__msg">
+      Click New Event to create your first point
+    </p>
   `;
 };
 
-export default class CitiesDatalist {
+export default class EmptyList {
   constructor() {
     this._element = null;
   }
 
   getTemplate() {
-    return createCitiesDatalist();
+    return createEmptyListTemplate();
   }
 
   getElement() {

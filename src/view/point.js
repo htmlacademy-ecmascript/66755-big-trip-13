@@ -1,33 +1,6 @@
 import {formatDate, getDateTimeFromDate, getDurationString} from "../utils/date";
-
-const createOfferTemplate = (offer) => {
-  const {name, price} = offer;
-
-  return `
-    <li class="event__offer">
-      <span class="event__offer-title">${name}</span>
-      &plus;&euro;&nbsp;
-      <span class="event__offer-price">${price}</span>
-    </li>
-  `;
-};
-
-const createOffersTemplate = (offers) => {
-  return `
-    <h4 class="visually-hidden">Offers:</h4>
-    <ul class="event__selected-offers">
-        ${offers.map((offer) => createOfferTemplate(offer)).join(``)}
-    </ul>
-  `;
-};
-
-const createEventTemplate = (icon) => {
-  return `
-    <div class="event__type">
-      <img class="event__type-icon" width="42" height="42" src="img/icons/${icon}.png" alt="Event type icon">
-    </div>
-  `;
-};
+import {createElement} from "../helpers/create-element";
+import OffersView from "./offers";
 
 const createPointTemplate = (point) => {
   const {
@@ -53,7 +26,9 @@ const createPointTemplate = (point) => {
             ${shortMonthName.toUpperCase()} ${startDay}
         </time>
 
-        ${createEventTemplate(pointType.toLowerCase())}
+        <div class="event__type">
+          <img class="event__type-icon" width="42" height="42" src="img/icons/${pointType.toLowerCase()}.png" alt="Event type icon">
+        </div>
 
         <h3 class="event__title">${pointType} ${city}</h3>
         <div class="event__schedule">
@@ -67,7 +42,7 @@ const createPointTemplate = (point) => {
         <p class="event__price">
           &euro;&nbsp;<span class="event__price-value">${totalPrice}</span>
         </p>
-        ${createOffersTemplate(offers)}
+        ${new OffersView(offers).getTemplate()}
         <button class="event__favorite-btn event__favorite-btn--active" type="button">
           <span class="visually-hidden">Add to favorite</span>
           <svg class="event__favorite-icon" width="28" height="28" viewBox="0 0 28 28">
@@ -82,6 +57,25 @@ const createPointTemplate = (point) => {
   `;
 };
 
-export {
-  createPointTemplate
-};
+export default class Point {
+  constructor(point) {
+    this._point = point;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createPointTemplate(this._point);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

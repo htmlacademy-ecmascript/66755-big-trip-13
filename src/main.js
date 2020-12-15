@@ -1,24 +1,56 @@
-import {createTripInfoTemplate} from "./view/tripInfo";
-import {createMenuTemplate} from "./view/menu";
-import {createFilterTemplate} from "./view/filter";
-import {createSortTemplate} from "./view/sort";
-import {createListTemplate} from "./view/list";
-import {createPointTemplate} from "./view/point";
-import {createEditPointTemplate} from "./view/editPoint";
-import {createTripCostTemplate} from "./view/tripCost";
-import {render} from "./helpers/render";
+import TripInfoView from "./view/tripInfo";
+import MenuView from "./view/menu";
+import FilterView from "./view/filter";
+import SortView from "./view/sort";
+import ListView from "./view/list";
+import PointView from "./view/point";
+import PointEditView from "./view/edit-point";
+import TripCostView from "./view/trip-cost";
+import {render, RenderPosition} from "./helpers/render";
 import {createPoints} from "./mock/points";
-import {createAddNewPointTemplate} from "./view/addNewPoint";
-import {getRandomNumber} from "./utils/random";
+import EmptyListView from "./view/empty-list";
+import {isEscape} from "./utils/utils";
 
-const InsertPosition = {
-  BEFORE_BEGIN: `beforebegin`,
-  AFTER_BEGIN: `afterbegin`,
-  BEFORE_END: `beforeend`,
-  AFTER_END: `afterend`
+const renderPoint = (pointListElement, point) => {
+  const pointComponent = new PointView(point);
+  const pointEditComponent = new PointEditView(point);
+
+  const replaceCardToForm = () => {
+    pointListElement.replaceChild(pointEditComponent.getElement(), pointComponent.getElement());
+  };
+
+  const replaceFormToCard = () => {
+    pointListElement.replaceChild(pointComponent.getElement(), pointEditComponent.getElement());
+  };
+
+  const onEscapePressed = (event) => {
+    if (isEscape(event)) {
+      event.preventDefault();
+      replaceFormToCard();
+      document.removeEventListener(`keydown`, onEscapePressed);
+    }
+  };
+
+  pointComponent
+    .getElement()
+    .querySelector(`.event__rollup-btn`)
+    .addEventListener(`click`, () => {
+      replaceCardToForm();
+      document.addEventListener(`keydown`, onEscapePressed);
+    });
+
+  pointEditComponent
+    .getElement()
+    .querySelector(`.event--edit`)
+    .addEventListener(`submit`, (event) => {
+      event.preventDefault();
+      replaceFormToCard();
+    });
+
+  render(pointListElement, pointComponent.getElement(), RenderPosition.BEFORE_END);
 };
 
-const points = createPoints(16);
+const points = createPoints(20);
 
 const pageHeaderElement = document.querySelector(`.page-header`);
 const pageMainElement = document.querySelector(`.page-main`);
@@ -26,27 +58,24 @@ const tripMainElement = pageHeaderElement.querySelector(`.trip-main`);
 const tripControlsElement = tripMainElement.querySelector(`.trip-controls`);
 const tripEventsElement = pageMainElement.querySelector(`.trip-events`);
 
-render(tripMainElement, createTripInfoTemplate(points), InsertPosition.AFTER_BEGIN);
-const tripInfoElement = tripMainElement.querySelector(`.trip-info`);
+if (points.length) {
+  const tripInfo = new TripInfoView(points);
 
-render(tripInfoElement, createTripCostTemplate(points), InsertPosition.BEFORE_END);
+  render(tripMainElement, tripInfo.getElement(), RenderPosition.AFTER_BEGIN);
+  render(tripInfo.getElement(), new TripCostView(points).getElement(), RenderPosition.BEFORE_END);
+  render(tripEventsElement, new SortView().getElement(), RenderPosition.BEFORE_END);
+}
+render(tripControlsElement, new MenuView().getElement(), RenderPosition.AFTER_BEGIN);
+render(tripControlsElement, new FilterView().getElement(), RenderPosition.BEFORE_END);
 
-render(tripControlsElement, createMenuTemplate(), InsertPosition.AFTER_BEGIN);
-render(tripControlsElement, createFilterTemplate(), InsertPosition.BEFORE_END);
-render(tripEventsElement, createSortTemplate(), InsertPosition.BEFORE_END);
+const list = new ListView();
+render(tripEventsElement, list.getElement(), RenderPosition.BEFORE_END);
 
-render(tripEventsElement, createListTemplate(), InsertPosition.BEFORE_END);
-
-const pointsListElement = tripEventsElement.querySelector(`.trip-events__list`);
-
-if (getRandomNumber(0, 1)) {
-  render(pointsListElement, createAddNewPointTemplate(), InsertPosition.BEFORE_END);
+if (points.length) {
   points.forEach((point) => {
-    render(pointsListElement, createPointTemplate(point), InsertPosition.BEFORE_END);
+    renderPoint(list.getElement(), point);
   });
 } else {
-  render(pointsListElement, createEditPointTemplate(points[0]), InsertPosition.BEFORE_END);
-  points.slice(1).forEach((point) => {
-    render(pointsListElement, createPointTemplate(point), InsertPosition.BEFORE_END);
-  });
+  render(list.getElement(), new EmptyListView().getElement(), RenderPosition.AFTER_BEGIN);
 }
+
