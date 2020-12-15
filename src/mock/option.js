@@ -1,5 +1,4 @@
 import {PointType} from "./pointType";
-import {getRandomNumber} from "../utils/random";
 
 const createOption = (id, name, price) => ({
   id,
