@@ -1,10 +1,10 @@
 import {formatDate} from "../utils/date";
 import {getRandomOffersByPointType} from "../mock/option";
 import {getDestinationDescription} from "../mock/destinationDescription";
-import AvailableOffersView from "./availableOffers";
+import AvailableOffersView from "./available-offers";
 import DestinationDetailsView from "./destination-details";
-import EventTypeItemsView from "./eventTypeItems";
-import CitiesDatalistView from "./citiesDatalist";
+import EventTypeItemsView from "./event-type-items";
+import CitiesDatalistView from "./cities-datalist";
 import {createElement} from "../helpers/create-element";
 
 const createEditPointTemplate = (point) => {

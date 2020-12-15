@@ -1,4 +1,4 @@
-import TripInfoView from "./view/tripInfo";
+import TripInfoView from "./view/trip-info";
 import MenuView from "./view/menu";
 import FilterView from "./view/filter";
 import SortView from "./view/sort";
