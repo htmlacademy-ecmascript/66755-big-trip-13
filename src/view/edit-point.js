@@ -1,5 +1,5 @@
 import {formatDate} from "../utils/date";
-import {getRandomOffersByPointType} from "../mock/option";
+import {getOffersByPointType} from "../mock/option";
 import {getDestinationDescription} from "../mock/destinationDescription";
 import AvailableOffersView from "./available-offers";
 import DestinationDetailsView from "./destination-details";
@@ -19,7 +19,7 @@ const createEditPointTemplate = (point) => {
 
   const destinationDescription = city ? getDestinationDescription() : null;
 
-  const availableOffers = getRandomOffersByPointType(pointType);
+  const availableOffers = getOffersByPointType(pointType);
 
   return `
     <li class="trip-events__item">

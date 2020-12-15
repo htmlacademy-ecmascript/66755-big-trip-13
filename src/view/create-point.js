@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import {getRandomOffersByPointType} from "../mock/option";
+import {getOffersByPointType} from "../mock/option";
 import {PointType} from "../mock/pointType";
 import {CITIES} from "../mock/cities";
 import {getDestinationDescription} from "../mock/destinationDescription";
@@ -20,7 +20,7 @@ const createAddNewPointTemplate = () => {
   const city = DEFAULT_CITY;
   const offers = [];
   const destinationDescription = city ? getDestinationDescription() : null;
-  const availableOffers = getRandomOffersByPointType(pointType);
+  const availableOffers = getOffersByPointType(pointType);
 
   const startDate = formatDate(
       dayjs(),

@@ -7,10 +7,6 @@ const createOption = (id, name, price) => ({
   price
 });
 
-const getRandomOffersByPointType = (pointType) => {
-  return getRandomNumber(0, 1) ? getOffersByPointType(pointType) : [];
-};
-
 const getOffersByPointType = (pointType) => {
   switch (pointType) {
     case PointType.TAXI:
@@ -65,6 +61,5 @@ const getOffersByPointType = (pointType) => {
 
 export {
   getOffersByPointType,
-  getRandomOffersByPointType,
   createOption
 };
