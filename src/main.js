@@ -11,22 +11,33 @@ import {createPoints} from "./mock/points";
 import EmptyListView from "./view/empty-list";
 import {isEscape} from "./utils/utils";
 
+let currentFormClose = null;
+
 const renderPoint = (pointListElement, point) => {
   const pointComponent = new PointView(point);
   const pointEditComponent = new PointEditView(point);
 
   const replaceCardToForm = () => {
+    if (currentFormClose) {
+      currentFormClose();
+    }
+
     pointListElement.replaceChild(pointEditComponent.getElement(), pointComponent.getElement());
+
+    currentFormClose = () => replaceFormToCard();
   };
 
   const replaceFormToCard = () => {
     pointListElement.replaceChild(pointComponent.getElement(), pointEditComponent.getElement());
+
+    document.removeEventListener(`keydown`, onEscapePressed);
+    currentFormClose = null;
   };
 
   const onEscapePressed = (event) => {
     if (isEscape(event)) {
       event.preventDefault();
-      replaceFormToCard();
+      currentFormClose();
       document.removeEventListener(`keydown`, onEscapePressed);
     }
   };
