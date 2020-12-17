@@ -1,12 +1,12 @@
-const createElement = (template) => {
-  const newElement = document.createElement(`div`);
-  newElement.innerHTML = template.trim();
+const createElement = (html) => {
+  const template = document.createElement(`template`);
+  template.innerHTML = html.trim();
 
-  const hasChildren = newElement.children.length > 1;
+  const hasChildren = template.content.children.length > 1;
 
   return hasChildren ?
-    newElement :
-    newElement.firstChild;
+    template.content :
+    template.content.firstElementChild;
 };
 
 export {

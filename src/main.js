@@ -1,4 +1,4 @@
-import TripInfoView from "./view/tripInfo";
+import TripInfoView from "./view/trip-info";
 import MenuView from "./view/menu";
 import FilterView from "./view/filter";
 import SortView from "./view/sort";
@@ -11,25 +11,41 @@ import {createPoints} from "./mock/points";
 import EmptyListView from "./view/empty-list";
 import {isEscape} from "./utils/utils";
 
+let currentFormClose = null;
+
 const renderPoint = (pointListElement, point) => {
   const pointComponent = new PointView(point);
   const pointEditComponent = new PointEditView(point);
 
   const replaceCardToForm = () => {
+    if (currentFormClose) {
+      currentFormClose();
+    }
+
     pointListElement.replaceChild(pointEditComponent.getElement(), pointComponent.getElement());
+
+    currentFormClose = () => replaceFormToCard();
   };
 
   const replaceFormToCard = () => {
     pointListElement.replaceChild(pointComponent.getElement(), pointEditComponent.getElement());
+
+    document.removeEventListener(`keydown`, onEscapePressed);
+    currentFormClose = null;
   };
 
   const onEscapePressed = (event) => {
     if (isEscape(event)) {
       event.preventDefault();
-      replaceFormToCard();
+      currentFormClose();
       document.removeEventListener(`keydown`, onEscapePressed);
     }
   };
+
+  pointEditComponent
+    .getElement()
+    .querySelector(`.event__rollup-btn`)
+    .addEventListener(`click`, () => replaceFormToCard());
 
   pointComponent
     .getElement()

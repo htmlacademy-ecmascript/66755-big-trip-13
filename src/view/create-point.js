@@ -1,14 +1,14 @@
 import dayjs from "dayjs";
-import {getRandomOffersByPointType} from "../mock/option";
+import {getOffersByPointType} from "../mock/option";
 import {PointType} from "../mock/pointType";
 import {CITIES} from "../mock/cities";
 import {getDestinationDescription} from "../mock/destinationDescription";
 import {formatDate} from "../utils/date";
 import {createElement} from "../helpers/create-element";
-import EventTypeItemsView from "./eventTypeItems";
-import CitiesDatalistView from "./citiesDatalist";
+import EventTypeItemsView from "./event-type-items";
+import CitiesDatalistView from "./cities-datalist";
 import DestinationDetailsView from "./destination-details";
-import AvailableOffersView from "./availableOffers";
+import AvailableOffersView from "./available-offers";
 
 const DEFAULT_POINT_TYPE = PointType.FLIGHT;
 const DEFAULT_CITY = CITIES[0];
@@ -20,7 +20,7 @@ const createAddNewPointTemplate = () => {
   const city = DEFAULT_CITY;
   const offers = [];
   const destinationDescription = city ? getDestinationDescription() : null;
-  const availableOffers = getRandomOffersByPointType(pointType);
+  const availableOffers = getOffersByPointType(pointType);
 
   const startDate = formatDate(
       dayjs(),

@@ -1,15 +1,10 @@
 import {PointType} from "./pointType";
-import {getRandomNumber} from "../utils/random";
 
 const createOption = (id, name, price) => ({
   id,
   name,
   price
 });
-
-const getRandomOffersByPointType = (pointType) => {
-  return getRandomNumber(0, 1) ? getOffersByPointType(pointType) : [];
-};
 
 const getOffersByPointType = (pointType) => {
   switch (pointType) {
@@ -65,6 +60,5 @@ const getOffersByPointType = (pointType) => {
 
 export {
   getOffersByPointType,
-  getRandomOffersByPointType,
   createOption
 };
