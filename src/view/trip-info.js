@@ -1,5 +1,4 @@
 import {formatDate} from "../utils/date";
-import {createElement} from "../helpers/create-element";
 import AbstractView from "./abstract";
 
 const joinPointsCities = (points) => {

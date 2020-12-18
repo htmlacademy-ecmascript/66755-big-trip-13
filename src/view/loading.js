@@ -1,4 +1,3 @@
-import {createElement} from "../helpers/create-element";
 import AbstractView from "./abstract";
 
 const createLoading = () => {

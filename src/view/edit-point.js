@@ -5,7 +5,6 @@ import AvailableOffersView from "./available-offers";
 import DestinationDetailsView from "./destination-details";
 import EventTypeItemsView from "./event-type-items";
 import CitiesDatalistView from "./cities-datalist";
-import {createElement} from "../helpers/create-element";
 import AbstractView from "./abstract";
 
 const createEditPointTemplate = (point) => {
