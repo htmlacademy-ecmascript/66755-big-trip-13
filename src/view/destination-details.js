@@ -1,4 +1,4 @@
-import {createElement} from "../helpers/create-element";
+import AbstractView from "./abstract";
 
 const createDestinationDetailsTemplate = ({description, photos}) => {
   return `
@@ -23,25 +23,13 @@ const createDestinationDetailsTemplate = ({description, photos}) => {
   `;
 };
 
-export default class DestinationDetails {
+export default class DestinationDetails extends AbstractView {
   constructor(description) {
+    super();
     this._description = description;
-    this._element = null;
   }
 
   getTemplate() {
     return createDestinationDetailsTemplate(this._description);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

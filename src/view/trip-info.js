@@ -1,5 +1,6 @@
 import {formatDate} from "../utils/date";
 import {createElement} from "../helpers/create-element";
+import AbstractView from "./abstract";
 
 const joinPointsCities = (points) => {
   return points.reduce((acc, point, index) => {
@@ -44,25 +45,13 @@ const createTripInfoTemplate = (points) => {
   `;
 };
 
-export default class TripInfo {
+export default class TripInfo extends AbstractView {
   constructor(points = []) {
+    super();
     this._points = points;
-    this._element = null;
   }
 
   getTemplate() {
     return createTripInfoTemplate(this._points);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

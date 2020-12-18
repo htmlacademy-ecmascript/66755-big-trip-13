@@ -6,6 +6,7 @@ import DestinationDetailsView from "./destination-details";
 import EventTypeItemsView from "./event-type-items";
 import CitiesDatalistView from "./cities-datalist";
 import {createElement} from "../helpers/create-element";
+import AbstractView from "./abstract";
 
 const createEditPointTemplate = (point) => {
   const {
@@ -81,25 +82,13 @@ const createEditPointTemplate = (point) => {
   `;
 };
 
-export default class EditPoint {
+export default class EditPoint extends AbstractView {
   constructor(point) {
+    super();
     this._point = point;
-    this._element = null;
   }
 
   getTemplate() {
     return createEditPointTemplate(this._point);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

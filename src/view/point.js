@@ -1,6 +1,6 @@
 import {formatDate, getDateTimeFromDate, getDurationString} from "../utils/date";
-import {createElement} from "../helpers/create-element";
 import OffersView from "./offers";
+import AbstractView from "./abstract";
 
 const createPointTemplate = (point) => {
   const {
@@ -57,25 +57,13 @@ const createPointTemplate = (point) => {
   `;
 };
 
-export default class Point {
+export default class Point extends AbstractView {
   constructor(point) {
+    super();
     this._point = point;
-    this._element = null;
   }
 
   getTemplate() {
     return createPointTemplate(this._point);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

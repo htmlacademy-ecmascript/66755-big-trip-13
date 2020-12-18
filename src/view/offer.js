@@ -1,4 +1,4 @@
-import {createElement} from "../helpers/create-element";
+import AbstractView from "./abstract";
 
 const createOfferTemplate = (offer) => {
   const {name, price} = offer;
@@ -12,25 +12,13 @@ const createOfferTemplate = (offer) => {
   `;
 };
 
-export default class Offer {
+export default class Offer extends AbstractView {
   constructor(offer) {
+    super();
     this._offer = offer;
-    this._element = null;
   }
 
   getTemplate() {
     return createOfferTemplate(this._offer);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

@@ -1,5 +1,5 @@
 import {CITIES} from "../mock/cities";
-import {createElement} from "../helpers/create-element";
+import AbstractView from "./abstract";
 
 const createCitiesDatalist = () => {
   return `
@@ -9,24 +9,8 @@ const createCitiesDatalist = () => {
   `;
 };
 
-export default class CitiesDatalist {
-  constructor() {
-    this._element = null;
-  }
-
+export default class CitiesDatalist extends AbstractView{
   getTemplate() {
     return createCitiesDatalist();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

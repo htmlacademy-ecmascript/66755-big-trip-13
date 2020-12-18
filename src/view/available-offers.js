@@ -1,4 +1,4 @@
-import {createElement} from "../helpers/create-element";
+import AbstractView from "./abstract";
 
 const createAvailableOffersTemplate = (availableOffers, offers) => {
   return `
@@ -29,26 +29,14 @@ const createAvailableOffersTemplate = (availableOffers, offers) => {
   `;
 };
 
-export default class AvailableOffers {
+export default class AvailableOffers extends AbstractView {
   constructor(availableOffers, offers) {
+    super();
     this._availableOffers = availableOffers;
     this._offers = offers;
-    this._element = null;
   }
 
   getTemplate() {
     return createAvailableOffersTemplate(this._availableOffers, this._offers);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
