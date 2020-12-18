@@ -9,7 +9,7 @@ const createCitiesDatalist = () => {
   `;
 };
 
-export default class CitiesDatalist extends AbstractView{
+export default class CitiesDatalist extends AbstractView {
   getTemplate() {
     return createCitiesDatalist();
   }

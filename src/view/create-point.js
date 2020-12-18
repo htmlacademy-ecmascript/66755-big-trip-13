@@ -88,7 +88,7 @@ const createAddNewPointTemplate = () => {
   `;
 };
 
-export default class CreatePoint extends AbstractView{
+export default class CreatePoint extends AbstractView {
   getTemplate() {
     return createAddNewPointTemplate();
   }

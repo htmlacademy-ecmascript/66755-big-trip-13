@@ -45,7 +45,7 @@ const replace = (newChild, oldChild) => {
   if (newChild && oldChild && oldChild.parentElement) {
     oldChild.parentElement.replaceChild(newChild, oldChild);
   }
-}
+};
 
 export {
   renderTemplate,
