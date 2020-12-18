@@ -1,6 +1,7 @@
 import {formatDate, getDateTimeFromDate, getDurationString} from "../utils/date";
 import OffersView from "./offers";
 import AbstractView from "./abstract";
+import {isMainClick} from "../utils/utils";
 
 const createPointTemplate = (point) => {
   const {
@@ -61,6 +62,21 @@ export default class Point extends AbstractView {
   constructor(point) {
     super();
     this._point = point;
+    this._clickHandler = this._clickHandler.bind(this);
+  }
+
+  _clickHandler(event) {
+    if (isMainClick(event)) {
+      event.preventDefault();
+      this._callback.click();
+    }
+  }
+
+  setClickHandler(callback) {
+    this._callback.click = callback;
+    this.getElement()
+      .querySelector(`.event__rollup-btn`)
+      .addEventListener(`click`, this._clickHandler);
   }
 
   getTemplate() {

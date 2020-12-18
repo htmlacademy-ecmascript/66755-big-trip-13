@@ -42,26 +42,13 @@ const renderPoint = (pointListElement, point) => {
     }
   };
 
-  pointEditComponent
-    .getElement()
-    .querySelector(`.event__rollup-btn`)
-    .addEventListener(`click`, () => replaceFormToCard());
+  pointComponent.setClickHandler(() => {
+    replaceCardToForm();
+    document.addEventListener(`keydown`, onEscapePressed);
+  });
 
-  pointComponent
-    .getElement()
-    .querySelector(`.event__rollup-btn`)
-    .addEventListener(`click`, () => {
-      replaceCardToForm();
-      document.addEventListener(`keydown`, onEscapePressed);
-    });
-
-  pointEditComponent
-    .getElement()
-    .querySelector(`.event--edit`)
-    .addEventListener(`submit`, (event) => {
-      event.preventDefault();
-      replaceFormToCard();
-    });
+  pointEditComponent.setClickHandler(() => replaceFormToCard());
+  pointEditComponent.setSubmitHandler(() => replaceFormToCard());
 
   render(pointListElement, pointComponent.getElement(), RenderPosition.BEFORE_END);
 };
