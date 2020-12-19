@@ -4,11 +4,11 @@ import {PointType} from "../mock/pointType";
 import {CITIES} from "../mock/cities";
 import {getDestinationDescription} from "../mock/destinationDescription";
 import {formatDate} from "../utils/date";
-import {createElement} from "../helpers/create-element";
 import EventTypeItemsView from "./event-type-items";
 import CitiesDatalistView from "./cities-datalist";
 import DestinationDetailsView from "./destination-details";
 import AvailableOffersView from "./available-offers";
+import AbstractView from "./abstract";
 
 const DEFAULT_POINT_TYPE = PointType.FLIGHT;
 const DEFAULT_CITY = CITIES[0];
@@ -88,24 +88,8 @@ const createAddNewPointTemplate = () => {
   `;
 };
 
-export default class CreatePoint {
-  constructor() {
-    this._element = null;
-  }
-
+export default class CreatePoint extends AbstractView {
   getTemplate() {
     return createAddNewPointTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

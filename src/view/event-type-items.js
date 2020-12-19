@@ -1,5 +1,5 @@
 import {PointType} from "../mock/pointType";
-import {createElement} from "../helpers/create-element";
+import AbstractView from "./abstract";
 
 const createEventTypeItems = (currentPointType) => {
   return Object.values(PointType).map((pointType) => {
@@ -30,25 +30,13 @@ const createEventTypeItems = (currentPointType) => {
   }).join(``);
 };
 
-export default class EventTypeItems {
+export default class EventTypeItems extends AbstractView {
   constructor(currentPointType) {
+    super();
     this._currentPointType = currentPointType;
-    this._element = null;
   }
 
   getTemplate() {
     return createEventTypeItems(this._currentPointType);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
