@@ -16,7 +16,8 @@ export default class TripPoints {
     this._listComponent = new ListView();
     this._emptyListComponent = new EmptyListView();
 
-    this._onPointChange = this._onPointChange.bind(this);
+    this._onPointUpdate = this._onPointUpdate.bind(this);
+    this._onModeUpdate = this._onModeUpdate.bind(this);
   }
 
   init(points) {
@@ -34,7 +35,7 @@ export default class TripPoints {
   }
 
   _renderPoint(point) {
-    const pointPresenter = new PointPresenter(this._listComponent, this._onPointChange);
+    const pointPresenter = new PointPresenter(this._listComponent, this._onPointUpdate, this._onModeUpdate);
     pointPresenter.init(point);
     this._taskPresenter[point.id] = pointPresenter;
   }
@@ -45,7 +46,13 @@ export default class TripPoints {
     });
   }
 
-  _onPointChange(updatedPoint) {
+  _onModeUpdate() {
+    Object
+      .values(this._taskPresenter)
+      .forEach((presenter) => presenter.reset());
+  }
+
+  _onPointUpdate(updatedPoint) {
     this._points = updateItem(this._points, updatedPoint);
     this._taskPresenter[updatedPoint.id].init(updatedPoint);
   }

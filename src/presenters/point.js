@@ -3,10 +3,18 @@ import PointView from "../view/point";
 import PointEditView from "../view/edit-point";
 import {isEscape} from "../utils/utils";
 
+const Mode = {
+  DEFAULT: `DEFAULT`,
+  EDITING: `EDITING`,
+};
+
 export default class Point {
-  constructor(container, onChange) {
+  constructor(container, onPointUpdate, onModeChange) {
     this._container = container;
-    this._onChange = onChange;
+    this._mode = Mode.DEFAULT;
+
+    this._onPointUpdate = onPointUpdate;
+    this._onModeChange = onModeChange;
 
     this._pointComponent = null;
     this._pointEditComponent = null;
@@ -15,8 +23,10 @@ export default class Point {
     this._previousPointEditComponent = this._pointEditComponent;
 
     this._onEscapePressed = this._onEscapePressed.bind(this);
-    this._replaceFormToCard = this._replaceFormToCard.bind(this);
-    this._replaceCardToForm = this._replaceCardToForm.bind(this);
+    this._onFavoriteClick = this._onFavoriteClick.bind(this);
+    this._onEditClick = this._onEditClick.bind(this);
+    this._onSubmit = this._onSubmit.bind(this);
+    this._onCloseClick = this._onCloseClick.bind(this);
   }
 
   init(point) {
@@ -34,11 +44,35 @@ export default class Point {
   _replaceCardToForm() {
     replace(this._pointEditComponent, this._pointComponent);
     document.addEventListener(`keydown`, this._onEscapePressed);
+    this._onModeChange();
+    this._mode = Mode.EDITING;
   }
 
   _replaceFormToCard() {
     replace(this._pointComponent, this._pointEditComponent);
     document.removeEventListener(`keydown`, this._onEscapePressed);
+    this._mode = Mode.DEFAULT;
+  }
+
+  _onEditClick() {
+    this._replaceCardToForm();
+  }
+
+  _onCloseClick() {
+    this._replaceFormToCard();
+  }
+
+  _onFavoriteClick() {
+    this._onPointUpdate(
+      {
+        ...this._point,
+        isFavorite: !this._point.isFavorite
+      }
+    );
+  }
+
+  _onSubmit() {
+    this._replaceFormToCard();
   }
 
   _renderPoint() {
@@ -48,28 +82,32 @@ export default class Point {
     this._pointComponent = new PointView(this._point);
     this._pointEditComponent = new PointEditView(this._point);
 
-    this._pointComponent.setClickHandler(() => this._replaceCardToForm());
-
-    this._pointComponent.setFavoriteHandler(() => {
-      this._onChange({...this._point, isFavorite: !this._point.isFavorite})
-    });
-    this._pointEditComponent.setClickHandler(() => this._replaceFormToCard());
-    this._pointEditComponent.setSubmitHandler(() => this._replaceFormToCard());
+    this._pointComponent.setClickHandler(this._onEditClick);
+    this._pointComponent.setFavoriteHandler(this._onFavoriteClick);
+    this._pointEditComponent.setClickHandler(this._onCloseClick);
+    this._pointEditComponent.setSubmitHandler(this._onSubmit);
 
     if (!this._previousPointComponent || !this._previousPointEditComponent) {
       render(this._container, this._pointComponent, RenderPosition.BEFORE_END);
+      return;
     }
 
-    if (contains(this._container, this._previousPointComponent)) {
+    if (this._mode === Mode.DEFAULT) {
       replace(this._pointComponent, this._previousPointComponent);
     }
 
-    if (contains(this._container, this._previousPointEditComponent)) {
+    if (this._mode === Mode.EDITING) {
       replace(this._pointEditComponent, this._previousPointEditComponent);
     }
 
     remove(this._previousPointComponent);
     remove(this._previousPointEditComponent);
+  }
+
+  reset() {
+    if (this._mode !== Mode.DEFAULT) {
+      this._replaceFormToCard();
+    }
   }
 
   destroy() {
