@@ -1,4 +1,4 @@
-import {contains, remove, render, RenderPosition, replace} from "../helpers/render";
+import {remove, render, RenderPosition, replace} from "../helpers/render";
 import PointView from "../view/point";
 import PointEditView from "../view/edit-point";
 import {isEscape} from "../utils/utils";
@@ -39,7 +39,7 @@ export default class Point {
       event.preventDefault();
       this._replaceFormToCard();
     }
-  };
+  }
 
   _replaceCardToForm() {
     replace(this._pointEditComponent, this._pointComponent);
@@ -64,10 +64,13 @@ export default class Point {
 
   _onFavoriteClick() {
     this._onPointUpdate(
-      {
-        ...this._point,
-        isFavorite: !this._point.isFavorite
-      }
+        Object.assign(
+            {},
+            this._point,
+            {
+              isFavorite: !this._point.isFavorite
+            }
+        )
     );
   }
 

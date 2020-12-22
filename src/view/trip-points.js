@@ -12,4 +12,4 @@ export default class TripPoints extends AbstractView {
   getTemplate() {
     return createTripPointsTemplate();
   }
-};
+}
