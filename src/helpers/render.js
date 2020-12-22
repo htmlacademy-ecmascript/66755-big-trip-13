@@ -1,10 +1,8 @@
 import AbstractView from "../view/abstract";
 
 const RenderPosition = {
-  BEFORE_BEGIN: `beforebegin`,
   AFTER_BEGIN: `afterbegin`,
   BEFORE_END: `beforeend`,
-  AFTER_END: `afterend`
 };
 
 const renderTemplate = (container, content, position) => {
@@ -47,9 +45,36 @@ const replace = (newChild, oldChild) => {
   }
 };
 
+const contains = (container, child) => {
+  if (container instanceof AbstractView) {
+    container = container.getElement();
+  }
+
+  if (child instanceof AbstractView) {
+    child = child.getElement();
+  }
+
+  return container.contains(child);
+};
+
+const remove = (element) => {
+  if (element === null) {
+    return;
+  }
+
+  if (!(element instanceof AbstractView)) {
+    throw new Error(`Can't delete not AbstractView instance`);
+  }
+
+  element.getElement().remove();
+  element.removeElement();
+}
+
 export {
   renderTemplate,
   render,
   replace,
+  remove,
+  contains,
   RenderPosition
 };
