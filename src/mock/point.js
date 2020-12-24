@@ -9,6 +9,8 @@ const BASE_PRICE_MAX = 250;
 
 const POINTS_INTERVAL_IN_MINUTES = 60;
 
+const generateId = () => Date.now() + parseInt(`${Math.random() * 10000}`, 10);
+
 const getMinTimeByPointTypeInMinutes = (pointType) => {
   switch (pointType) {
     case PointType.TAXI:
@@ -62,15 +64,18 @@ const createPoint = (previousEndDate = null) => {
   const basePrice = getRandomNumber(BASE_PRICE_MIN, BASE_PRICE_MAX);
   const offers = getRandomNumber(0, 1) ? getOffersByPointType(pointType) : [];
   const totalPrice = offers.reduce((acc, offer) => acc + offer.price, basePrice);
+  const isFavorite = Boolean(getRandomNumber(0, 1));
 
   return {
+    id: generateId(),
     pointType,
     city: getRandomItemFromArray(CITIES),
     basePrice,
     totalPrice,
     startDate,
     endDate,
-    offers
+    offers,
+    isFavorite
   };
 };
 
