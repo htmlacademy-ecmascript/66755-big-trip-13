@@ -8,7 +8,7 @@ const Mode = {
   EDITING: `EDITING`,
 };
 
-export default class Point {
+export default class PointPresenter {
   constructor(container, onPointUpdate, onModeChange) {
     this._container = container;
     this._mode = Mode.DEFAULT;

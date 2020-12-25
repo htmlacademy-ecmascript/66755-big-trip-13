@@ -6,7 +6,7 @@ import {render, RenderPosition} from "../helpers/render";
 import PointPresenter from "./point";
 import {updateItem} from "../helpers/common";
 
-export default class TripPoints {
+export default class TripPresenter {
   constructor(container) {
     this._container = container;
     this._taskPresenter = {};
