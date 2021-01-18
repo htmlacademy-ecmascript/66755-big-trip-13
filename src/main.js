@@ -4,7 +4,7 @@ import FilterView from "./view/filter";
 import TripCostView from "./view/trip-cost";
 import {render, RenderPosition} from "./helpers/render";
 import {createPoints} from "./mock/points";
-import TripPresenter from "./presenters/trip-points";
+import TripPresenter from "./presenters/trip";
 
 const POINTS_COUNT = 20;
 const points = createPoints(POINTS_COUNT);
