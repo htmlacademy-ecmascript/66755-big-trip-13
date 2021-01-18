@@ -2,7 +2,7 @@ import TripInfoView from "./view/trip-info";
 import MenuView from "./view/menu";
 import FilterView from "./view/filter";
 import TripCostView from "./view/trip-cost";
-import {render, RenderPosition} from "./helpers/render";
+import {render, RenderPosition} from "./utils/render";
 import {createPoints} from "./mock/points";
 import TripPresenter from "./presenters/trip";
 

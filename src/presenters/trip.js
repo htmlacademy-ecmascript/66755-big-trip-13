@@ -2,9 +2,9 @@ import SortView from '../view/sort';
 import ListView from "../view/list";
 import EmptyListView from "../view/empty-list";
 import TripPointsView from "../view/trip-points";
-import {render, RenderPosition} from "../helpers/render";
+import {render, RenderPosition} from "../utils/render";
 import PointPresenter from "./point";
-import {updateItem} from "../helpers/common";
+import {updateItem} from "../utils/common";
 import {sortPointsByPrice, sortPointsByTime, sortPointsByDay} from "../utils/point.js";
 import {SortType} from "../constants.js";
 
