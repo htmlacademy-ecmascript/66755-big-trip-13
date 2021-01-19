@@ -30,6 +30,10 @@ const getDatesDiff = (startDate, endDate) => {
   };
 };
 
+const getPointDurationInMs = (point) => {
+  return point.endDate.valueOf() - point.startDate.valueOf();
+};
+
 const getDurationString = (startDate, endDate) => {
   const {days, hours, minutes} = getDatesDiff(startDate, endDate);
 
@@ -49,5 +53,6 @@ const getDurationString = (startDate, endDate) => {
 export {
   formatDate,
   getDateTimeFromDate,
-  getDurationString
+  getDurationString,
+  getPointDurationInMs
 };

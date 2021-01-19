@@ -1,4 +1,4 @@
-import {remove, render, RenderPosition, replace} from "../helpers/render";
+import {remove, render, RenderPosition, replace} from "../utils/render";
 import PointView from "../view/point";
 import PointEditView from "../view/edit-point";
 import {isEscape} from "../utils/utils";
@@ -8,7 +8,7 @@ const Mode = {
   EDITING: `EDITING`,
 };
 
-export default class Point {
+export default class PointPresenter {
   constructor(container, onPointUpdate, onModeChange) {
     this._container = container;
     this._mode = Mode.DEFAULT;
