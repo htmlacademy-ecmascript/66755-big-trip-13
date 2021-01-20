@@ -92,7 +92,7 @@ export default class TripPresenter {
   }
 
   _onPointUpdate(updatedPoint) {
-    this._points = updateItem(this._points, updatedPoint);
+    this._initialPoints = updateItem(this._initialPoints, updatedPoint);
     this._taskPresenter[updatedPoint.id].init(updatedPoint);
   }
 
