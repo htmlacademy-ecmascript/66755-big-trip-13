@@ -3,7 +3,7 @@ import AvailableOffersView from "./available-offers";
 import DestinationDetailsView from "./destination-details";
 import EventTypeItemsView from "./event-type-items";
 import CitiesDatalistView from "./cities-datalist";
-import {isMainClick, toCapitalize} from "../utils/utils";
+import {isMainClick} from "../utils/utils";
 import {parseDataToPoint, parsePointToData} from "../utils/point";
 import SmartView from "./smart";
 import {getOffersByPointType} from "../mock/option";
