@@ -17,11 +17,9 @@ export default class SmartView extends AbstractView {
 
     this._data = Object.assign({}, this._data, update);
 
-    if (justDataUpdating) {
-      return;
+    if (!justDataUpdating) {
+      this.updateElement();
     }
-
-    this.updateElement();
   }
 
   updateElement() {
@@ -37,6 +35,6 @@ export default class SmartView extends AbstractView {
   }
 
   restoreHandlers() {
-    throw new Error('restoreHandlers is not realized');
+    throw new Error(`restoreHandlers is not realized`);
   }
 }
