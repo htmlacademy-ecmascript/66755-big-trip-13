@@ -1,5 +1,5 @@
 import {getRandomItemFromArray, getRandomNumber} from "../utils/random";
-import {PointType} from "../mock/pointType";
+import {PointType} from "./pointType";
 import dayjs from 'dayjs';
 import {getOffersByPointType} from "./option";
 import {CITIES} from "./cities";

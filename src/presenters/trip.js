@@ -53,6 +53,7 @@ export default class TripPresenter {
       return;
     }
 
+    this._sortComponent.updateData(sortType);
     this._sortPoints(sortType);
     this._clearPointsList();
     this._renderPoints();
