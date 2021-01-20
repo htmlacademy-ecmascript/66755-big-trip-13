@@ -156,7 +156,7 @@ export default class EditPoint extends SmartView {
 
   _cityHandler(event) {
     event.preventDefault();
-    const newValue = toCapitalize(event.target.value.trim());
+    const newValue = event.target.value.trim();
 
     if (newValue !== this._data.city && CITIES.includes(newValue)) {
       this.updateData(
