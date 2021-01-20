@@ -1,7 +1,8 @@
 import {formatDate, getDateTimeFromDate, getDurationString} from "../utils/date";
 import OffersView from "./offers";
-import AbstractView from "./abstract";
 import {isMainClick} from "../utils/utils";
+import {parsePointToData} from "../utils/point";
+import SmartView from "./smart";
 
 const createPointTemplate = (point) => {
   const {
@@ -45,7 +46,7 @@ const createPointTemplate = (point) => {
           &euro;&nbsp;<span class="event__price-value">${totalPrice}</span>
         </p>
         ${new OffersView(offers).getTemplate()}
-        <button class="event__favorite-btn ${isFavorite ? `event__favorite-btn--active` : ``}" type="button">
+        <button class="event__favorite-btn${isFavorite ? ` event__favorite-btn--active` : ``}" type="button">
           <span class="visually-hidden">Add to favorite</span>
           <svg class="event__favorite-icon" width="28" height="28" viewBox="0 0 28 28">
             <path d="M14 21l-8.22899 4.3262 1.57159-9.1631L.685209 9.67376 9.8855 8.33688 14 0l4.1145 8.33688 9.2003 1.33688-6.6574 6.48934 1.5716 9.1631L14 21z"/>
@@ -59,12 +60,38 @@ const createPointTemplate = (point) => {
   `;
 };
 
-export default class Point extends AbstractView {
-  constructor(point) {
+export default class Point extends SmartView {
+  constructor(point, descriptionList) {
     super();
+
     this._point = point;
+    this._descriptionList = descriptionList;
+    this._data = parsePointToData(point, this._descriptionList);
+
     this._onClickHandler = this._onClickHandler.bind(this);
     this._onFavoriteClick = this._onFavoriteClick.bind(this);
+
+    this.restoreHandlers();
+  }
+
+  reset(point) {
+    this._point = point;
+    this._data = parsePointToData(point, this._descriptionList);
+    this.updateElement();
+  }
+
+  restoreHandlers() {
+    this._setHandlers();
+  }
+
+  _setHandlers() {
+    this.getElement()
+      .querySelector(`.event__favorite-btn`)
+      .addEventListener(`click`, this._onFavoriteClick);
+
+    this.getElement()
+      .querySelector(`.event__rollup-btn`)
+      .addEventListener(`click`, this._onClickHandler);
   }
 
   _onClickHandler(event) {
