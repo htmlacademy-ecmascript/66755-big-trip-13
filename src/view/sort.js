@@ -1,4 +1,3 @@
-import AbstractView from "./abstract";
 import {SortTypes} from "../utils/point";
 import {toCapitalize} from "../utils/utils";
 import SmartView from "./smart";
@@ -32,13 +31,13 @@ const createSortItemTemplate = (value, isChecked, isActive) => {
 const createSortTemplate = (currentSortType) => {
   return `
     <form class="trip-events__trip-sort trip-sort" action="#" method="get">
-      ${COLUMNS.map((column) => {
-        debugger;
-        return createSortItemTemplate(
-          column,
-          column === currentSortType,
-          Object.values(SortTypes).includes(column))
-      }).join(``)}
+    ${COLUMNS.map((column) => {
+    return createSortItemTemplate(
+        column,
+        column === currentSortType,
+        Object.values(SortTypes).includes(column)
+    );
+  }).join(``)}
     </form>
   `;
 };
