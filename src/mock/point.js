@@ -3,6 +3,7 @@ import {PointType} from "./pointType";
 import dayjs from 'dayjs';
 import {getOffersByPointType} from "./option";
 import {CITIES} from "./cities";
+import {getTotalPrice} from "../utils/point";
 
 const BASE_PRICE_MIN = 20;
 const BASE_PRICE_MAX = 250;
@@ -63,7 +64,7 @@ const createPoint = (previousEndDate = null) => {
 
   const basePrice = getRandomNumber(BASE_PRICE_MIN, BASE_PRICE_MAX);
   const offers = getRandomNumber(0, 1) ? getOffersByPointType(pointType) : [];
-  const totalPrice = offers.reduce((acc, offer) => acc + offer.price, basePrice);
+  const totalPrice = getTotalPrice(basePrice, offers);
   const isFavorite = Boolean(getRandomNumber(0, 1));
 
   return {

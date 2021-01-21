@@ -40,6 +40,8 @@ const sortPointsByPrice = (points) => {
   return [...points].sort((p1, p2) => p2.totalPrice - p1.totalPrice);
 };
 
+const getTotalPrice = (basePrice, offers) => offers.reduce((acc, offer) => acc + offer.price, basePrice);
+
 const parsePointToData = (point, descriptionList) => {
   return Object.assign(
       {},
@@ -53,6 +55,9 @@ const parsePointToData = (point, descriptionList) => {
 
 const parseDataToPoint = (data) => {
   data = Object.assign({}, data);
+  const {basePrice, offers} = data;
+
+  data.totalPrice = getTotalPrice(basePrice, offers);
 
   delete data.destinationDescription;
   delete data.availableOffers;
@@ -67,5 +72,6 @@ export {
   sortPointsByPrice,
   parseDataToPoint,
   parsePointToData,
+  getTotalPrice,
   DEFAULT_POINT
 };

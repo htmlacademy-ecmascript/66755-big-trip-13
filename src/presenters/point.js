@@ -77,7 +77,8 @@ export default class PointPresenter {
     this._onPointUpdate(updatedPoint);
   }
 
-  _onSubmit() {
+  _onSubmit(updatedPoint) {
+    this._onPointUpdate(updatedPoint);
     this._replaceFormToCard();
   }
 
