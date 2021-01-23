@@ -9,9 +9,10 @@ const Mode = {
 };
 
 export default class PointPresenter {
-  constructor(container, onPointUpdate, onModeChange) {
+  constructor(container, onPointUpdate, onModeChange, descriptionList) {
     this._container = container;
     this._mode = Mode.DEFAULT;
+    this._descriptionList = descriptionList;
 
     this._onPointUpdate = onPointUpdate;
     this._onModeChange = onModeChange;
@@ -37,6 +38,7 @@ export default class PointPresenter {
   _onEscapePressed(event) {
     if (isEscape(event)) {
       event.preventDefault();
+      this._pointEditComponent.reset(this._point);
       this._replaceFormToCard();
     }
   }
@@ -59,22 +61,24 @@ export default class PointPresenter {
   }
 
   _onCloseClick() {
+    this._pointEditComponent.reset(this._point);
     this._replaceFormToCard();
   }
 
   _onFavoriteClick() {
-    this._onPointUpdate(
-        Object.assign(
-            {},
-            this._point,
-            {
-              isFavorite: !this._point.isFavorite
-            }
-        )
+    const updatedPoint = Object.assign(
+        {},
+        this._point,
+        {
+          isFavorite: !this._point.isFavorite
+        }
     );
+
+    this._onPointUpdate(updatedPoint);
   }
 
-  _onSubmit() {
+  _onSubmit(updatedPoint) {
+    this._onPointUpdate(updatedPoint);
     this._replaceFormToCard();
   }
 
@@ -82,8 +86,8 @@ export default class PointPresenter {
     this._previousPointComponent = this._pointComponent;
     this._previousPointEditComponent = this._pointEditComponent;
 
-    this._pointComponent = new PointView(this._point);
-    this._pointEditComponent = new PointEditView(this._point);
+    this._pointComponent = new PointView(this._point, this._descriptionList);
+    this._pointEditComponent = new PointEditView(this._point, this._descriptionList);
 
     this._pointComponent.setClickHandler(this._onEditClick);
     this._pointComponent.setFavoriteHandler(this._onFavoriteClick);

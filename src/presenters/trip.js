@@ -5,14 +5,14 @@ import TripPointsView from "../view/trip-points";
 import {render, RenderPosition} from "../utils/render";
 import PointPresenter from "./point";
 import {updateItem} from "../utils/common";
-import {sortPointsByPrice, sortPointsByTime, sortPointsByDay} from "../utils/point.js";
-import {SortType} from "../constants.js";
+import {sortPointsByPrice, sortPointsByTime, sortPointsByDay, SortTypes} from "../utils/point.js";
 
 export default class TripPresenter {
-  constructor(container) {
+  constructor(container, descriptionList) {
     this._container = container;
     this._taskPresenter = {};
-    this._currentSortType = SortType.DAY;
+    this._currentSortType = SortTypes.DAY;
+    this._descriptionList = descriptionList;
 
     this._tripPointsComponent = new TripPointsView();
     this._sortComponent = new SortView();
@@ -25,7 +25,7 @@ export default class TripPresenter {
   }
 
   init(points) {
-    this._points = [...points];
+    this._points = points.slice();
     this._initialPoints = points.slice();
     render(this._container, this._tripPointsComponent, RenderPosition.BEFORE_END);
     this._renderTripPoints();
@@ -33,13 +33,13 @@ export default class TripPresenter {
 
   _sortPoints(sortType) {
     switch (sortType) {
-      case SortType.PRICE:
+      case SortTypes.PRICE:
         this._points = sortPointsByPrice(this._initialPoints);
         break;
-      case SortType.TIME:
+      case SortTypes.TIME:
         this._points = sortPointsByTime(this._initialPoints);
         break;
-      case SortType.DAY:
+      case SortTypes.DAY:
       default:
         this._points = sortPointsByDay(this._initialPoints);
         break;
@@ -53,6 +53,7 @@ export default class TripPresenter {
       return;
     }
 
+    this._sortComponent.updateData(sortType);
     this._sortPoints(sortType);
     this._clearPointsList();
     this._renderPoints();
@@ -68,7 +69,12 @@ export default class TripPresenter {
   }
 
   _renderPoint(point) {
-    const pointPresenter = new PointPresenter(this._listComponent, this._onPointUpdate, this._onModeUpdate);
+    const pointPresenter = new PointPresenter(
+        this._listComponent,
+        this._onPointUpdate,
+        this._onModeUpdate,
+        this._descriptionList
+    );
     pointPresenter.init(point);
     this._taskPresenter[point.id] = pointPresenter;
   }
@@ -86,7 +92,7 @@ export default class TripPresenter {
   }
 
   _onPointUpdate(updatedPoint) {
-    this._points = updateItem(this._points, updatedPoint);
+    this._initialPoints = updateItem(this._initialPoints, updatedPoint);
     this._taskPresenter[updatedPoint.id].init(updatedPoint);
   }
 

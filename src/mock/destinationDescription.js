@@ -1,5 +1,5 @@
-import {getRandomItemFromArray} from "../utils/random";
-import {getRandomPhotos} from "../mock/photos";
+import {getRandomItemFromArray, getRandomNumber} from "../utils/random";
+import {getRandomPhotos} from "./photos";
 
 const PARAGRAPHS = [
   `Lorem ipsum dolor sit amet, consectetur adipiscing elit.`,
@@ -20,7 +20,9 @@ const PARAGRAPHS_MAX_COUNT = 5;
 const getRandomDescription = () => {
   const paragraphs = [];
 
-  for (let i = PARAGRAPHS_MIN_COUNT; i < PARAGRAPHS_MAX_COUNT; i++) {
+  const randomCount = getRandomNumber(PARAGRAPHS_MIN_COUNT, PARAGRAPHS_MAX_COUNT);
+
+  for (let i = 0; i < randomCount; i++) {
     const randomParagraph = getRandomItemFromArray(PARAGRAPHS);
     paragraphs.push(randomParagraph);
   }

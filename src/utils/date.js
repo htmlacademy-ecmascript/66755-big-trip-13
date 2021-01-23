@@ -3,7 +3,9 @@ import dayjs from "dayjs";
 const MINUTES_IN_HOUR = 60;
 const MINUTES_IN_DAY = 1440;
 
-const formatDate = (date, format) => {
+const DEFAULT_DATE_FORMAT = `YY/M/DD HH:mm`;
+
+const formatDate = (date, format = DEFAULT_DATE_FORMAT) => {
   return dayjs(date).format(format);
 };
 

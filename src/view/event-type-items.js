@@ -1,9 +1,11 @@
 import {PointType} from "../mock/pointType";
 import AbstractView from "./abstract";
+import {toCapitalize} from "../utils/utils";
 
 const createEventTypeItems = (currentPointType) => {
   return Object.values(PointType).map((pointType) => {
-    const value = pointType.toLowerCase();
+    const value = pointType;
+    const label = toCapitalize(pointType);
     const id = `event-type-${value}`;
     const labelClass = `event__type-label event__type-label--${value}`;
     const isChecked = pointType === currentPointType;
@@ -23,7 +25,7 @@ const createEventTypeItems = (currentPointType) => {
           class="${labelClass}"
           for="${id}"
         >
-          ${pointType}
+          ${label}
         </label>
       </div>
     `;

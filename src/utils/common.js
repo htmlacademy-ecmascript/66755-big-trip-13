@@ -1,5 +1,5 @@
 const updateItem = (items, update) => {
-  const index = items.find((item) => item.id === update.id);
+  const index = items.findIndex((item) => item.id === update.id);
 
   if (index === -1) {
     return items;

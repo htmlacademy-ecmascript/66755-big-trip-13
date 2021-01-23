@@ -16,7 +16,7 @@ const createDestinationDetailsTemplate = ({description, photos}) => {
                   src="${photo}"
                   alt="Event photo">
               `;
-            })}
+            }).join(``)}
          </div>
       </div>
     </section>
